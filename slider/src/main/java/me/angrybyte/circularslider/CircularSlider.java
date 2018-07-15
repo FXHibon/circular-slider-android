@@ -18,6 +18,10 @@ import java.util.Arrays;
 
 public class CircularSlider extends View {
 
+    public void setSlices(int slices) {
+        this.slices = slices;
+    }
+
     /**
      * Listener interface used to detect when slider moves around.
      */
@@ -50,6 +54,10 @@ public class CircularSlider extends View {
     private double mStartAngle;
     private double mAngle = mStartAngle;
     private boolean mIsThumbSelected = false;
+    // increment count by interval
+    private int interval;
+    // how much slices for a complete tour
+    private int slices = 50;
 
     private Paint mPaint = new Paint();
     private SweepGradient mGradientShader;
@@ -86,6 +94,8 @@ public class CircularSlider extends View {
         int thumbColor = a.getColor(R.styleable.CircularSlider_thumb_color, Color.GRAY);
         int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
         int borderColor = a.getColor(R.styleable.CircularSlider_border_color, Color.RED);
+        int interval = a.getInteger(R.styleable.CircularSlider_interval, 1);
+        int slices = a.getInteger(R.styleable.CircularSlider_slices, 50);
         String borderGradientColors = a.getString(R.styleable.CircularSlider_border_gradient_colors);
         Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_thumb_image);
 
@@ -100,6 +110,8 @@ public class CircularSlider extends View {
         setThumbSize(thumbSize);
         setThumbImage(thumbImage);
         setThumbColor(thumbColor);
+        setInterval(interval);
+        setSlices(slices);
 
         // assign padding - check for version because of RTL layout compatibility
         int padding;
@@ -163,6 +175,10 @@ public class CircularSlider extends View {
 
     public void setPadding(int padding) {
         mPadding = padding;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
     }
 
     @Override
@@ -237,7 +253,8 @@ public class CircularSlider extends View {
 
         if (mListener != null) {
             // notify slider moved listener of the new position which should be in [0..1] range
-            mListener.onSliderMoved((mAngle - mStartAngle) / (2 * Math.PI));
+            double currentAngle = (mAngle - mStartAngle) / (2 * Math.PI);
+            mListener.onSliderMoved((currentAngle / (1d / ((double) slices))) * ((double) this.interval));
         }
     }
 

@@ -20,7 +20,7 @@ ext {
     siteUrl = 'https://github.com/milosmns/circular-slider-android'
     gitUrl = 'https://github.com/milosmns/circular-slider-android.git'
 
-    libraryVersion = '1.4.2'
+    libraryVersion = '2.0.0'
 
     developerId = 'milosmns'
     developerName = 'Milos Marinkovic'

@@ -10,6 +10,8 @@
         <attr name="thumb_size" format="dimension" />
         <attr name="thumb_image" format="reference" />
         <attr name="thumb_color" format="color" />
+        <attr name="interval" format="integer" />
+        <attr name="slices" format="integer" />
     </declare-styleable>
 
 </resources>
